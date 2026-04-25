@@ -30,8 +30,13 @@ export const useGame = () => {
     }, [])
 
     useEffect(() => {
-        if (gameScore > 20) {
+        if(gameScore > 40){
+            setGameSpeed(350);
+        }
+        else if (gameScore > 30) {
             setGameSpeed(400);
+        } else if (gameScore > 20) {
+            setGameSpeed(500);
         } else if (gameScore > 10) {
             setGameSpeed(700);
         }
@@ -125,6 +130,7 @@ export const useGame = () => {
         setGameScore(0);
         setGameOver(gameOverMessage);
         setStartGame(false);
+        setGameSpeed(1000)
     }
 
     return { gridArray, handleColorClick, gameScore, isIntroGoingOn, setIsIntroGoingOn, gameOver, startGame, setStartGame, setGameOver };
