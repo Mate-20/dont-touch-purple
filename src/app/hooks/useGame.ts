@@ -24,19 +24,19 @@ export const useGame = () => {
     const tapSoundRef = useRef<HTMLAudioElement | null>(null);
     const gameOverSoundRef = useRef<HTMLAudioElement | null>(null);
 
-    useEffect(()=>{
+    useEffect(() => {
         tapSoundRef.current = new Audio("/blockTap.mp3");
         gameOverSoundRef.current = new Audio("/gameOver.mp3");
-    },[])
+    }, [])
 
-    useEffect(()=>{
-        if(gameScore > 20){
+    useEffect(() => {
+        if (gameScore > 20) {
             setGameSpeed(400);
-        } else if(gameScore > 10){
+        } else if (gameScore > 10) {
             setGameSpeed(700);
-        } 
-    },[gameScore])
-    
+        }
+    }, [gameScore])
+
     useEffect(() => {
         // Always clear any previous interval before starting a new one
         if (intervalRef.current) {
@@ -110,14 +110,17 @@ export const useGame = () => {
         if (gridArray[index].value && gridArray[index].color === PURPLE_COLOR) {
             handleGameOver("Touched Purple");
         } else if (gridArray[index].value) {
-            tapSoundRef.current?.play();
+            if (tapSoundRef.current) {
+                tapSoundRef.current.currentTime = 0;
+                tapSoundRef.current.play();
+            }
             setGameScore(s => s + 1);
 
         }
         removeColor(index);
     }
 
-    const handleGameOver = (gameOverMessage : "All Colors Filled" | "Touched Purple" | "") => {
+    const handleGameOver = (gameOverMessage: "All Colors Filled" | "Touched Purple" | "") => {
         gameOverSoundRef.current?.play();
         setGameScore(0);
         setGameOver(gameOverMessage);
