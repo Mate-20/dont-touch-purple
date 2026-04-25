@@ -34,11 +34,11 @@ export const useGame = () => {
             setGameSpeed(350);
         }
         else if (gameScore > 30) {
-            setGameSpeed(400);
-        } else if (gameScore > 20) {
             setGameSpeed(500);
+        } else if (gameScore > 20) {
+            setGameSpeed(650);
         } else if (gameScore > 10) {
-            setGameSpeed(700);
+            setGameSpeed(800);
         }
     }, [gameScore])
 
