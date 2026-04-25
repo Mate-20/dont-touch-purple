@@ -8,8 +8,8 @@ const GRID_NUMBER = 8;
 
 export type gridType = { value: boolean, color: string }
 
-const COLORS = ["#06B6D4", "#E11D48", "#F59E0B", "#10B981", "#EC4899", "#7C3AED"];
-const PURPLE_COLOR = "#7C3AED";
+const COLORS = ["#06B6D4", "#E11D48", "#F59E0B", "#10B981", "#EC4899", "#c74fff"];
+const PURPLE_COLOR = "#c74fff";
 
 export const useGame = () => {
     const [isIntroGoingOn, setIsIntroGoingOn] = useState(true);
@@ -30,6 +30,9 @@ export const useGame = () => {
     }, [])
 
     useEffect(() => {
+        if(gameScore > 50){
+            setGameSpeed(300);
+        }
         if(gameScore > 40){
             setGameSpeed(350);
         }
