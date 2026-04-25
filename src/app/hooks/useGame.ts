@@ -21,8 +21,13 @@ export const useGame = () => {
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const purpleTimeoutsRef = useRef<Map<number, ReturnType<typeof setTimeout>>>(new Map());
 
-    const tapSound = new Audio("/blockTap.mp3");
-    const gameOverSound = new Audio("/gameOver.mp3");
+    const tapSoundRef = useRef<HTMLAudioElement | null>(null);
+    const gameOverSoundRef = useRef<HTMLAudioElement | null>(null);
+
+    useEffect(()=>{
+        tapSoundRef.current = new Audio("/blockTap.mp3");
+        gameOverSoundRef.current = new Audio("/gameOver.mp3");
+    },[])
 
     useEffect(()=>{
         if(gameScore > 20){
@@ -105,7 +110,7 @@ export const useGame = () => {
         if (gridArray[index].value && gridArray[index].color === PURPLE_COLOR) {
             handleGameOver("Touched Purple");
         } else if (gridArray[index].value) {
-            tapSound.play();
+            tapSoundRef.current?.play();
             setGameScore(s => s + 1);
 
         }
@@ -113,7 +118,7 @@ export const useGame = () => {
     }
 
     const handleGameOver = (gameOverMessage : "All Colors Filled" | "Touched Purple" | "") => {
-        gameOverSound.play();
+        gameOverSoundRef.current?.play();
         setGameScore(0);
         setGameOver(gameOverMessage);
         setStartGame(false);
