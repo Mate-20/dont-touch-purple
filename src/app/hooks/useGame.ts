@@ -9,6 +9,7 @@ const GRID_NUMBER = 8;
 export type gridType = { value: boolean, color: string }
 
 const COLORS = ["#06B6D4", "#E11D48", "#F59E0B", "#10B981", "#EC4899", "#c74fff"];
+const COLORS_WITHOUT_PURPLE = ["#06B6D4", "#E11D48", "#F59E0B", "#10B981", "#EC4899"];
 const PURPLE_COLOR = "#c74fff";
 
 export const useGame = () => {
@@ -67,12 +68,24 @@ export const useGame = () => {
                 for (let i = 0; i < prev.length; i++) {
                     if (!prev[i].value) emptyIndices.push(i);
                 }
+
+                let purpleColorCount = 0;
+                for(let i=0; i<prev.length ; i++){
+                    if(prev[i].value && prev[i].color == PURPLE_COLOR){
+                        purpleColorCount++;
+                    }
+                }
                 // If all indices are filled, end the game and stop spawning
                 if (emptyIndices.length === 0) {
                     handleGameOver("All Colors Filled");
                     return prev;
                 }
-                const randomColor = COLORS[Math.floor(Math.random() * COLORS.length)];
+                let randomColor = "";
+                if(purpleColorCount >= 2){
+                    randomColor = COLORS_WITHOUT_PURPLE[Math.floor(Math.random() * COLORS_WITHOUT_PURPLE.length)];
+                }else{
+                    randomColor = COLORS[Math.floor(Math.random() * COLORS.length)];
+                }
                 const randomIndex =
                     emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
 
